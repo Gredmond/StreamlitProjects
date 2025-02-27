@@ -13,7 +13,7 @@ st.title("Technical Stock Analysis Dashboard")
 st.sidebar.header("Configuration")
 
 # Input for multiple stock tickers (comma-separated)
-tickers_input = st.sidebar.text_input("Enter Stock Tickers (comma-separated):", "BROS")
+tickers_input = st.sidebar.text_input("Enter Stock Tickers (comma-separated):", "SG")
 # Parse tickers by stripping extra whitespace and splitting on commas
 tickers = [ticker.strip().upper() for ticker in tickers_input.split(",") if ticker.strip()]
 
@@ -66,20 +66,15 @@ if st.sidebar.button("Fetch Data"):
 
 if "stock_data" in st.session_state and st.session_state["stock_data"]:
     # Create tabs: first tab for overall summary, subsequent tabs per ticker
-    tab_names = ["Overall Summary"] + list(st.session_state["stock_data"].keys())# + ["Stock Information", "Latest News"]
+    tab_names = list(st.session_state["stock_data"].keys())
     tabs = st.tabs(tab_names)
-
-    # List to store overall results
-    overall_results = []
 
     # Process each ticker and populate results
     for i, ticker in enumerate(st.session_state["stock_data"]):
         data = st.session_state["stock_data"][ticker]
         # Analyze ticker: get chart figure and structured output result
         fig = analyze_ticker(ticker, data, indicators)
-        overall_results.append({"Stock": ticker, "NoRecommendation": ""})
-        # In each ticker-specific tab, display the chart and detailed justification
-        with tabs[i + 1]:
+        with tabs[i]:
             info = yf.Ticker(ticker).info
             st.subheader(f"Analysis for {ticker} ({info.get('shortName', '')})")
             st.plotly_chart(fig)
@@ -101,11 +96,5 @@ if "stock_data" in st.session_state and st.session_state["stock_data"]:
                         st.write(art.get("link", "No link available"))                        
                 else:
                     print("No articles found in the past 3 days.")
-
-    # In the Overall Summary tab, display a table of all results
-    with tabs[0]:
-        st.subheader("Overall Structured Recommendations")
-        df_summary = pd.DataFrame(overall_results)
-        st.table(df_summary)
 else:
     st.info("Please fetch stock data using the sidebar.")
