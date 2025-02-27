@@ -13,7 +13,7 @@ st.title("Technical Stock Analysis Dashboard")
 st.sidebar.header("Configuration")
 
 # Input for multiple stock tickers (comma-separated)
-tickers_input = st.sidebar.text_input("Enter Stock Tickers (comma-separated):", "SG")
+tickers_input = st.sidebar.text_input("Enter Stock Tickers (comma-separated):", "Pins")
 # Parse tickers by stripping extra whitespace and splitting on commas
 tickers = [ticker.strip().upper() for ticker in tickers_input.split(",") if ticker.strip()]
 
@@ -62,8 +62,6 @@ if st.sidebar.button("Fetch Data"):
 
 # Ensure we have data to analyze
 ##################################################################Tabs##################################################################################################################   
-    # Define a function to build chart, call the Gemini API and return structured result
-
 if "stock_data" in st.session_state and st.session_state["stock_data"]:
     # Create tabs: first tab for overall summary, subsequent tabs per ticker
     tab_names = list(st.session_state["stock_data"].keys())
