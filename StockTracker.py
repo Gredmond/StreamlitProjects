@@ -13,7 +13,7 @@ st.title("Technical Stock Analysis Dashboard")
 st.sidebar.header("Configuration")
 
 # Input for multiple stock tickers (comma-separated)
-tickers_input = st.sidebar.text_input("Enter Stock Tickers (comma-separated):", "SG")
+tickers_input = st.sidebar.text_input("Enter Stock Tickers (comma-separated):", "Pins")
 # Parse tickers by stripping extra whitespace and splitting on commas
 tickers = [ticker.strip().upper() for ticker in tickers_input.split(",") if ticker.strip()]
 
